@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: fragment_sets.aux
+The style file: h-physrev3.bst
+Database file #1: DEC.bib.bib
+You've used 2 entries,
+            1957 wiz_defined-function locations,
+            614 strings with 5145 characters,
+and the built_in function-call counts, 440 in all, are:
+= -- 23
+> -- 32
+< -- 0
++ -- 10
+- -- 8
+* -- 43
+:= -- 67
+add.period$ -- 2
+call.type$ -- 2
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 2
+duplicate$ -- 18
+empty$ -- 41
+format.name$ -- 10
+if$ -- 96
+int.to.chr$ -- 0
+int.to.str$ -- 2
+missing$ -- 3
+newline$ -- 11
+num.names$ -- 2
+pop$ -- 9
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 17
+stack$ -- 0
+substring$ -- 13
+swap$ -- 6
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 3
+width$ -- 3
+write$ -- 16

@@ -1,0 +1,201 @@
+\documentclass[12pt,a4paper,english]{article}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}%utf-8 utf8x
+%\usepackage{lmodern}
+\usepackage{fontenc}[T1]
+\usepackage{babel}%[T1] \usepackage{amssymb,amsmath,wick}
+\usepackage{epsfig}
+\usepackage{wrapfig}
+\usepackage{color,subfigure}  
+\usepackage{amsmath}
+%\usepackage{beamerthemesplit}
+\usepackage{graphicx}
+\usepackage{listings}
+%\usepackage[pdftex,colorlinks=true,bookmarks=true,linkcolor=blue]{hyperref}
+\let\Tiny=\tiny
+
+\newcommand{\be}{ \begin{equation}}
+\newcommand{\ee}{ \end{equation}}
+\newcommand{\mc}{ \mathcal }
+\newcommand{\mbf}{ \mathbf }
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\braopket}[3]{\langle #1|#2|#3\rangle}
+\newcommand{\beq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}
+\newcommand{\ds}{\displaystyle{\not}}
+\newcommand{\matr}[1]{{\bf \cal{#1}}}
+\newcommand{\OP}[1]{{\bf\widehat{#1}}}
+
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\setlength{\parindent}{0in} %Ingen indent
+
+\title{Notes about the fragment sets in DEC CC.} 
+\date{} 
+\begin{document} In
+the DEC model the HF orbitals are are assigned to atomic sites according to the
+Mulliken the largest Mulliken charge. Each atomic site get assigned a set of
+occupied and virtual orbitals.  An orbital corresponding to atomic site $P$
+belong to the set $\underline P$ if it is occupied and to $\overline P$ if it is a
+virtual orbital. \\
+
+The correlation energy obtained from the CC equations is thus given by
+
+\begin{equation}
+  E_{corr}=\sum_{P} E_P +sum_{P>Q}\Delta E_{PQ}
+  \label{eq:cccorrPQ}
+\end{equation}
+where $E_P$ is defined by
+
+\begin{equation}
+  E_P=\sum_{ij\in \underline P} (t^{ab}_{ij}+t^a_it^b_j)(2g_{iajb}-g_{ibja})
+  \label{eq:EP}
+\end{equation}
+and $\Delta E_{PQ}$ is defined by
+\begin{equation}
+  E_{PQ}-E_P-E_Q
+  \label{eq:DEPQ}
+\end{equation}
+and 
+\begin{equation}
+  E_{PQ}=\sum_{\substack{ij \in \underline P \cup \underline Q \\ab}} (t^{ab}_{ij}+t^a_it^b_j)(2g_{iajb}-g_{ibja})
+  \label{eq:EPQ}
+\end{equation}
+
+The set $[\underline{P}]$ is the set of all occupied orbitals local to site $P$, while the set $[\overline{P}$ is the set of all virtual orbitals local to site $P$.
+  The local HF orbitals leads to an electron correlation energy where the contributions from the term $g_{iajb}$ is nonnegligible only when 
+  \begin{equation}
+	i\in \underline{P},\, a\in [\overline{P}]\, \mbox{and}\, j\in \underline{Q},\, b\in [\overline{Q}].
+	\label{eq:critnonneg}
+  \end{equation}
+
+This relation leads to restrictions on the sums over the virtual particles $a$ and $b$,
+\begin{equation}
+  \begin{split}
+  & E_P=\sum_{\substack{ij\in \underline{P}\\ab\in [\overline{P}]}}(t^{ab}_{ij}+t^a_it^b_j)(2g_{iajb}-g_{ibja})\\
+  & E_{PQ}=\sum_{\substack{ij\in \underline{P}\cup \underline{Q}\\ab\in [\overline{P}]\cup [\overline{Q}]}}(t^{ab}_{ij}+t^a_it^b_j)(2g_{iajb}-g_{ibja}).
+\end{split}
+  \label{eq:restEP}
+\end{equation}
+
+\section{Amplitude Equations}
+
+For detailed analysis of the MP2 amplitude equations and the solution see Ref. \cite{Kristensen2011}.
+We observe that the MP2 amplitude equation is expressed as
+\begin{equation}
+  \Omega_{aibj}=\braopket{\substack{\overline{ab}\\ ij}}{\hat H}{HF}+\braopket{\substack{\overline{ab}\\ ij}}{[\hat F,\hat T_2]}{HF}=0,
+  \label{eq:MP2ampleq}
+\end{equation}
+where $\hat H$ is the Hamiltionian and $T_2$ is the cluster doubles operator
+\begin{equation}
+  \hat T_2=\frac{1}{2}\sum_{aibj}t^{ab}_{ij}E_{ai}E_{bj}.
+  \label{eq:t2ampl}
+\end{equation}
+The operator $\hat F$ is the fock operator and its matrix elements are given as
+\begin{equation}
+  F_{pq}=h_{pq}+\sum_{i}(2g_{pqii}-g_{piiq}).
+  \label{eq:fockopele}
+\end{equation}
+Because of Brillouin's theorem the fock matrix will be on a block diagonal form where the occupied-virtual block yields zero
+\begin{equation}
+  F_{OV}=0.
+  \label{eq:fockoccvirt}
+\end{equation}
+The process to solve Eq. \eqref{eq:MP2ampleq} is solved by standard iterative algorithms, such as the conjugate gradient or conjugate residual methods, see 
+Ref. \cite{book:helgco} after using one of the above mentioned algorithms a new direction for the $(n+1)$'th iteration is determined from the residual 
+
+\begin{equation}
+  R^n_{aibj}=0-\Omega_{aibj}=-\Omega_{aibj},
+  \label{eq:residuedef}
+\end{equation}
+and the amplitude in the $(n+1)$'th iteration is updated according to 
+\begin{equation}
+  t^{n+1}=t^n+R^n.
+  \label{eq:n+1iteration}
+\end{equation}
+When $R^n$ is lower than a given threshold the iteration process is completed.
+
+\section{The Fragments in the Amplitude Equation}
+
+The MP2 amplitude equation is finally expressed by
+\begin{equation}
+  \sum_c t^{cb}_{ij}F_{ac}+\sum_ct^{ac}F_{bc}-\sum_kt^{ab}_{kj}F_{ki}-\sum_k t^{ab}_{ik}F_{kj}+g_{aibj}=0.
+  \label{eq:ampleqexp}
+\end{equation}
+%with the solution
+%\begin{equation}
+%   \sum_c t^{cb}_{ij}F_{ac}+\sum_ct^{ac}F_{bc}-\sum_kt^{ab}_{kj}F_{ki}-\sum_k t^{ab}_{ik}F_{kj}=-g_{aibj}.
+%  \label{eq:sovamplmp2}
+%\end{equation}
+Because of the deacrising properties of the fock matrix elements with increasing distances between the molecular orbitals, the off-diagonal Fock matrix elements are non-negligible only if
+\begin{equation}
+  \begin{split}
+	&F^{oo}_{kl}; k\in \underline{P},l\in [\underline{P}]~\mbox{or}~k\in[\underline{P}],l\in \underline{P}\\
+	&F^{vv}_{ab};a\in\overline{P},b\in[\overline{P}]~\mbox{or}~a\in]\overline{P}],b\in\overline{P}.
+  \end{split}
+  \label{eq:t2amplrestricmp2}
+\end{equation}
+
+In Ref. \cite{Kristensen2011} the first guess of the $t2$ amplitude is 0 which
+gives the residual
+\begin{equation}
+  R^{1,MP2}_{aibj}(t^1)=-g_{aibj}.
+  \label{eq:MP2inital}
+\end{equation}
+
+In the first iteration the non-vanishing integrals $g_{aibj}$ for
+$i\in\underline{P}$ and $j\in\underline{Q}$ occur only if
+$a\in\{\overline{P\}}$ and $b\in\{\overline{Q}\}$. Following this line the
+second iteration amplitude $t^{2,ab}_{ij}=R^{1,ab}_{ij}$ is nonvanishing only
+when
+
+\begin{equation}
+  i\in\underline{P},a\in[\overline{P}],~j\in\underline{Q},b\in[\overline{Q}].
+  \label{eq:2restt2mp2}
+\end{equation}
+
+The second iteration residual, $R^{2,MP2}_{aibj}$ is given by
+\begin{equation}
+  R^{2,MP2}_{aibj}=-g_{aibj}-\sum_{c\in[\overline{P}]}t^{2,cb}_{ij}F_{ac}-\sum_{c\in[\overline{Q}]}t^{2,ac}_{ij}F_{bc}+\sum_{k\in\underline{P}}t^{2,ab}_{kj}F_{ki}+\sum_{k\in\underline{Q}}t^{2,ab}_{ik}F_{kj},
+  \label{eq:2itmp2res}
+\end{equation}
+
+and becomes nonnegligible when $a\in[\overline{P}]_2$, $b\in[\overline{Q}]_2$, for
+the second and third term respectively and for $i\in[\underline{P}]$ and $j\in[\underline{Q}]$ in the fourth and fifth term respectively.
+Here $[P]_2$ is the set of molecular orbitals including and local to $[P]$. 
+
+Following the same procedure for the third iteration, the third residual
+\begin{equation}
+  R^{3,MP2}_{aibj}=-g_{aibj}-\sum_{c}t^{3,cb}_{ij}F_{ac}-\sum_{c}t^{3,ac}_{ij}F_{bc}+\sum_{k}t^{3,ab}_{kj}F_{ki}+\sum_{k}t^{3,ab}_{ik}F_{kj}
+  \label{eq:thirdresid}
+\end{equation}
+becomes non-negligible when $a\in[\overline P]_3$, seen from the second term, $b\in[\overline Q]_3$, as seen from the third term, $i\in[\underline{P}]_2$ as seen from the fourth term and for $j\in [\underline{Q}]_2$ as seen from the fifth term in Eq. \eqref{eq:thirdresid}.
+The following iteration will increase the fragmental space taking contributing 
+to the amplitudes in the same manner.
+The second iteration introduces a first order interaction (FOI) space containing
+the amplitudes
+\begin{equation}
+  i\in[\underline{P}]-\underline{P},a\in[\overline{P}]_2-[\overline{P}],~j\in[\underline{Q}]-\underline Q,b\in[\overline{Q}]_2-[\overline{Q}].
+  \label{eq:FOI}
+\end{equation}
+
+The second order interaction space (SOI) is similarily defined as
+\begin{equation}
+  i\in[\underline{P}]_2-[\underline{P}],a\in[\overline{P}]_3-[\overline{P}]_2,~j\in[\underline{Q}]_2-[\underline{Q}],b\in[\overline{Q}]_3-[\overline{Q}]_2,
+  \label{eq:SOI}
+\end{equation}
+
+which is the difference in spaces between iteration four and three.
+From Eq. \eqref{eq:2itmp2res} we notice that the terms referencing only the indices $a\in[\overline{P}]_2-[\overline{P}]$ and $b\in[\overline{Q}]_2-[\overline{Q}]$ are small because the residual has no integral contribution, whil the terms referencing $i\in[\underline{P}]-\underline{P}$ and $j\in[\underline{Q}]-\underline{Q}$ are on the same order as the first iteration. 
+It follows then that the effect the SOI space has on the amplitude can in most cases be neglected. For the later iterations the new orbital spaces insignificant.
+
+
+
+
+
+
+\bibliographystyle{h-physrev3}
+\bibliography{DEC.bib}
+
+\end{document}
